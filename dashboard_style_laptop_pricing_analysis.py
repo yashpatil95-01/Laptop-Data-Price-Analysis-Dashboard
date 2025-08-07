@@ -1,0 +1,127 @@
+
+# dashboard_style_laptop_pricing_analysis.py
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy import stats
+
+# Load data
+url = "https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DA0101EN-Coursera/laptop_pricing_dataset_mod2.csv"
+df = pd.read_csv(url)
+
+# Remove extra unnamed index columns
+df.drop(columns=['Unnamed: 0.1', 'Unnamed: 0'], inplace=True)
+# Display DataFrame info
+# Optional: Map numerical or generic category values to human-readable strings
+gpu_mapping = {1: "GTX 1050", 2: "RTX 3070", 3: "RTX 4080"}
+os_mapping = {1: "Windows", 2: "Linux"}
+category_mapping = {1: "Gaming", 2: "Business", 3: "Ultrabook", 4: "Workstation", 5: "Convertible"}
+
+df['GPU'] = df['GPU'].replace(gpu_mapping)
+df['OS'] = df['OS'].replace(os_mapping)
+df['Category'] = df['Category'].replace(category_mapping)
+# Display DataFrame info
+gpu_mapping = {
+    1: "GTX 1050",
+    2: "RTX 3070",
+    3: "RTX 4080"
+}
+df['GPU'] = df['GPU'].replace(gpu_mapping)
+
+os_mapping = {
+    1: "Windows",
+    2: "Linux"
+}
+df['OS'] = df['OS'].replace(os_mapping)
+
+category_mapping = {
+    1: "Gaming",
+    2: "Business",
+    3: "Ultrabook",
+    4: "Workstation",
+    5: "Convertible",
+}
+df['Category'] = df['Category'].replace(category_mapping)
+
+# Quick data check
+print("Category values:", df['Category'].unique())
+print("GPU values:", df['GPU'].unique())
+print("OS values:", df['OS'].unique())
+print("\n--------------------------------------------------------------------------------DataFrame head-------------------------------------------------------------------------")
+print(df.head())
+
+# Set plot style
+sns.set(style="whitegrid")
+
+# === 1. Basic Description ===
+print("\n--- Numeric Summary ---")
+print(df.describe().T)
+
+print("\n--- Categorical Summary ---")
+print(df.describe(include=['object']).T)
+
+# === 2. Correlation Matrix Heatmap ===
+plt.figure(figsize=(8, 6))
+corr = df.select_dtypes(include=[np.number]).corr()
+
+sns.heatmap(corr, annot=True, cmap='coolwarm', fmt=".2f", square=True)
+plt.title("Correlation Matrix Heatmap")
+plt.savefig("results/correlation_matrix.png")
+plt.tight_layout()
+plt.show()
+
+
+# === 3. Scatter plots of numeric features vs Price ===
+numeric_features = ["CPU_frequency", "Screen_Size_inch", "Weight_pounds"]
+
+fig, axes = plt.subplots(1, 3, figsize=(18,5))
+for ax, feature in zip(axes, numeric_features):
+    sns.regplot(x=feature, y="Price", data=df, ax=ax)
+    ax.set_title(f"{feature} vs Price")
+    ax.set_ylim(0,)
+plt.tight_layout()
+plt.savefig("results/scatter_plots.png")
+plt.show()
+
+
+
+# === 4. Boxplots for categorical/binned features ===
+categorical_features = ["Category", "GPU", "RAM_GB", "Storage_GB_SSD", "CPU_core", "OS"]
+
+fig, axes = plt.subplots(2, 3, figsize=(18,10))
+axes = axes.flatten()
+
+for ax, col in zip(axes, categorical_features):
+    sns.boxplot(x=col, y="Price", data=df, ax=ax)
+    ax.set_title(f"Price Distribution by {col}")
+    ax.tick_params(axis='x', rotation=45)
+plt.tight_layout()
+plt.savefig("results/boxplots.png")
+
+plt.show()
+
+# === 5. Grouped Heatmap (GPU x CPU_core) with average price ===
+grouped = df.groupby(['GPU', 'CPU_core'])['Price'].mean().unstack()
+
+
+plt.figure(figsize=(10,6))
+sns.heatmap(grouped, annot=True, fmt=".0f", cmap="RdBu_r", center=grouped.mean().mean())
+plt.title("Average Price by GPU and CPU Core Count")
+plt.ylabel("GPU")
+plt.xlabel("CPU Core Count")
+plt.savefig("results/grouped_heatmap.png")
+plt.tight_layout()  
+plt.show()
+
+# === 6. Pearson Correlations with Price ===
+print("\n--- Pearson Correlations with Price ---")
+for param in numeric_features + categorical_features:
+    # For categorical variables, encode to numeric for correlation calculation
+    if df[param].dtype == 'object':
+        encoded = pd.factorize(df[param])[0]
+        coef, p_val = stats.pearsonr(encoded, df['Price'])
+    else:
+        coef, p_val = stats.pearsonr(df[param], df['Price'])
+    print(f"{param}: Correlation = {coef:.3f}, p-value = {p_val:.3g}")
+
