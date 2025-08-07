@@ -67,7 +67,13 @@ corr = df.select_dtypes(include=[np.number]).corr()
 
 sns.heatmap(corr, annot=True, cmap='coolwarm', fmt=".2f", square=True)
 plt.title("Correlation Matrix Heatmap")
-plt.savefig("results/correlation_matrix.png")
+
+import os
+
+save_dir = "E:/PythonProjects/PA-Projects/Laptop_Pricing_Analysis/results"
+os.makedirs(save_dir, exist_ok=True)  # Create the folder if it doesn't exist
+
+plt.savefig(os.path.join(save_dir, "correlation_matrix_heatmap.png"))
 plt.tight_layout()
 plt.show()
 
@@ -81,7 +87,7 @@ for ax, feature in zip(axes, numeric_features):
     ax.set_title(f"{feature} vs Price")
     ax.set_ylim(0,)
 plt.tight_layout()
-plt.savefig("results/scatter_plots.png")
+plt.savefig(os.path.join(save_dir, "scatter_plots.png"))
 plt.show()
 
 
@@ -97,7 +103,7 @@ for ax, col in zip(axes, categorical_features):
     ax.set_title(f"Price Distribution by {col}")
     ax.tick_params(axis='x', rotation=45)
 plt.tight_layout()
-plt.savefig("results/boxplots.png")
+plt.savefig(os.path.join(save_dir, "boxplots.png"))
 
 plt.show()
 
@@ -110,8 +116,8 @@ sns.heatmap(grouped, annot=True, fmt=".0f", cmap="RdBu_r", center=grouped.mean()
 plt.title("Average Price by GPU and CPU Core Count")
 plt.ylabel("GPU")
 plt.xlabel("CPU Core Count")
-plt.savefig("results/grouped_heatmap.png")
-plt.tight_layout()  
+plt.savefig(os.path.join(save_dir, "grouped_heatmap.png"))
+plt.tight_layout()
 plt.show()
 
 # === 6. Pearson Correlations with Price ===
