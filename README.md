@@ -16,7 +16,7 @@ laptop-pricing-analysis-dashboard/
 
 This project explores and analyzes a laptop pricing dataset using Python, with a focus on visualization and statistical relationships between key features and price.
 
-## 📊 Key Tasks
+##  Key Tasks
 
 - Clean and preprocess the dataset
 - Map encoded values (e.g., GPU, OS, Category) to readable labels
@@ -25,7 +25,7 @@ This project explores and analyzes a laptop pricing dataset using Python, with a
 - Create heatmaps and boxplots for feature comparison
 - Save all plots for use in presentations or dashboards
 
-## 📁 Output Files
+##  Output Files
 
 All analysis plots are saved in the `results/` directory:
 - `correlation_matrix.png`: Heatmap of feature correlations
@@ -33,7 +33,7 @@ All analysis plots are saved in the `results/` directory:
 - `boxplots.png`: Boxplots of price distribution by categorical features
 - `grouped_heatmap.png`: Average price by GPU and CPU core count
 
-## 🧰 Requirements
+##  Requirements
 
 To run the script, install the following packages:
 
@@ -41,7 +41,7 @@ To run the script, install the following packages:
 pip install -r requirements.txt
 ```
 
-🗃️ Dataset
+ Dataset
 Dataset is loaded from the following URL:
 ```bash
 https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DA0101E
@@ -54,7 +54,7 @@ requirements.txt: Python dependencies
 
 results/: Folder storing all generated plots
 
-📌 Notes
+ Notes
 This is part of a hands-on data analysis project using real-world-style datasets. It's designed to help practice:
 
 Exploratory Data Analysis (EDA)
@@ -65,12 +65,12 @@ Feature encoding and mapping
 
 Correlation analysis
 
-👤 Author
+ Author
 Yash Patil — Manufacturing Engineer pivoting into data and product analytics
 
 ---
 
-## 📦 `requirements.txt`
+##  `requirements.txt`
 
 Include this so others can set up the environment easily:
 
