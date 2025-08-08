@@ -11,8 +11,13 @@ url = "https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDev
 df = pd.read_csv(url)
 
 # Remove extra unnamed index columns
-df.drop(columns=['Unnamed: 0.1', 'Unnamed: 0'], inplace=True)
+df.drop(columns=['Unnamed: 0.1', 'Unnamed: 0'], inplace=True)   
+
+
 # Display DataFrame info
+df.info()
+
+
 # Optional: Map numerical or generic category values to human-readable strings
 gpu_mapping = {1: "GTX 1050", 2: "RTX 3070", 3: "RTX 4080"}
 os_mapping = {1: "Windows", 2: "Linux"}
