@@ -174,7 +174,7 @@ def main():
         })
         
         # Print detailed interpretation
-        print(f"\n📊 {param.upper()} ({feature_type})")
+        print(f"\n{param.upper()} ({feature_type})")
         print(f"   Correlation: {coef:.3f}")
         print(f"   Relationship: {interpret_correlation(coef)}")
         print(f"   Statistical Significance: {interpret_p_value(p_val)} (p = {p_val:.3g})")
@@ -182,11 +182,11 @@ def main():
         # Add practical interpretation
         if abs(coef) >= 0.3 and p_val < 0.05:
             if coef > 0:
-                print(f"   💡 Insight: Higher {param} tends to be associated with HIGHER laptop prices")
+                print(f"   Insight: Higher {param} tends to be associated with HIGHER laptop prices")
             else:
-                print(f"   💡 Insight: Higher {param} tends to be associated with LOWER laptop prices")
+                print(f"   Insight: Higher {param} tends to be associated with LOWER laptop prices")
         else:
-            print(f"   💡 Insight: {param} shows little to no reliable relationship with laptop prices")
+            print(f"   Insight: {param} shows little to no reliable relationship with laptop prices")
 
     # Create correlation results DataFrame for better visualization
     corr_df = pd.DataFrame(correlation_results)
