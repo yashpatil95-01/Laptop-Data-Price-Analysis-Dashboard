@@ -1,12 +1,14 @@
 ```
 laptop-pricing-analysis-dashboard/
 │
-├── dashboard_style_laptop_pricing_analysis.py
+├── laptop_pricing_analysis.py
+├── laptop_pricing_analysis.ipynb
 ├── results/
 │   ├── correlation_matrix.png
 │   ├── scatter_plots.png
 │   ├── boxplots.png
-│   └── grouped_heatmap.png
+│   ├── grouped_heatmap.png
+│   └── correlation_analysis.png
 │
 ├── requirements.txt
 └── README.md
@@ -49,11 +51,10 @@ https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperS
 ```
 
 📂 File Descriptions
-dashboard_style_laptop_pricing_analysis.py: Main script containing all data processing and plotting logic
-
-requirements.txt: Python dependencies
-
-results/: Folder storing all generated plots
+- `laptop_pricing_analysis.py`: Main Python script with all analysis logic
+- `laptop_pricing_analysis.ipynb`: Interactive Jupyter notebook version
+- `requirements.txt`: Python dependencies
+- `results/`: Folder storing all generated plots
 
  Notes
 This is part of a hands-on data analysis project using real-world-style datasets. It's designed to help practice:
@@ -84,12 +85,12 @@ pip install -r requirements.txt
 Run the analysis:
 
 ```bash
-python dashboard_style_laptop_pricing_analysis.py
+python laptop_pricing_analysis.py
 ```
 
 Or explore interactively with the Jupyter notebook:
 
 ```bash
-jupyter notebook laptop_pricing_analysis_dashboard.ipynb
+jupyter notebook laptop_pricing_analysis.ipynb
 ```
 
