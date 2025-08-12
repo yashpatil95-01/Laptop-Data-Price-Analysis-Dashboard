@@ -32,6 +32,7 @@ All analysis plots are saved in the `results/` directory:
 - `scatter_plots.png`: Regression plots for numeric features vs Price
 - `boxplots.png`: Boxplots of price distribution by categorical features
 - `grouped_heatmap.png`: Average price by GPU and CPU core count
+- `correlation_analysis.png`: Detailed correlation analysis with interpretations
 
 ##  Requirements
 
