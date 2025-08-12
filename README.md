@@ -70,15 +70,25 @@ Yash Patil — Manufacturing Engineer pivoting into data and product analytics
 
 ---
 
-##  `requirements.txt`
+## Setup
 
-Include this so others can set up the environment easily:
+Install dependencies:
 
-```txt
-numpy
-pandas
-matplotlib
-seaborn
-scipy
+```bash
+pip install -r requirements.txt
+```
+
+## Usage
+
+Run the analysis:
+
+```bash
+python dashboard_style_laptop_pricing_analysis.py
+```
+
+Or explore interactively with the Jupyter notebook:
+
+```bash
+jupyter notebook laptop_pricing_analysis_dashboard.ipynb
 ```
 

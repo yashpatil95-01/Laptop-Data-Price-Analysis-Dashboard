@@ -1,52 +1,49 @@
 
-# dashboard_style_laptop_pricing_analysis.py
+#!/usr/bin/env python3
+"""
+Laptop Pricing Analysis Dashboard
+
+This script performs comprehensive analysis of laptop pricing data including:
+- Data cleaning and preprocessing
+- Correlation analysis
+- Visualization of price relationships
+- Statistical analysis
+
+Author: Yash Patil
+"""
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy import stats
+import os
 
-# Load data
-url = "https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DA0101EN-Coursera/laptop_pricing_dataset_mod2.csv"
-df = pd.read_csv(url)
+def load_and_clean_data():
+    """Load and clean the laptop pricing dataset."""
+    url = "https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DA0101EN-Coursera/laptop_pricing_dataset_mod2.csv"
+    df = pd.read_csv(url)
+    return df
+
+def main():
+    """Main analysis function."""
+    # Load data
+    df = load_and_clean_data()
 
 # Remove extra unnamed index columns
 df.drop(columns=['Unnamed: 0.1', 'Unnamed: 0'], inplace=True)   
 
-
 # Display DataFrame info
+print("--- Initial DataFrame Info ---")
 df.info()
 
-
-# Optional: Map numerical or generic category values to human-readable strings
+# Map numerical values to human-readable strings
 gpu_mapping = {1: "GTX 1050", 2: "RTX 3070", 3: "RTX 4080"}
 os_mapping = {1: "Windows", 2: "Linux"}
 category_mapping = {1: "Gaming", 2: "Business", 3: "Ultrabook", 4: "Workstation", 5: "Convertible"}
 
 df['GPU'] = df['GPU'].replace(gpu_mapping)
 df['OS'] = df['OS'].replace(os_mapping)
-df['Category'] = df['Category'].replace(category_mapping)
-# Display DataFrame info
-gpu_mapping = {
-    1: "GTX 1050",
-    2: "RTX 3070",
-    3: "RTX 4080"
-}
-df['GPU'] = df['GPU'].replace(gpu_mapping)
-
-os_mapping = {
-    1: "Windows",
-    2: "Linux"
-}
-df['OS'] = df['OS'].replace(os_mapping)
-
-category_mapping = {
-    1: "Gaming",
-    2: "Business",
-    3: "Ultrabook",
-    4: "Workstation",
-    5: "Convertible",
-}
 df['Category'] = df['Category'].replace(category_mapping)
 
 # Quick data check
@@ -75,10 +72,11 @@ plt.title("Correlation Matrix Heatmap")
 
 import os
 
-save_dir = "E:/PythonProjects/PA-Projects/Laptop_Pricing_Analysis/results"
-os.makedirs(save_dir, exist_ok=True)  # Create the folder if it doesn't exist
+# Create results directory relative to script location
+save_dir = "results"
+os.makedirs(save_dir, exist_ok=True)
 
-plt.savefig(os.path.join(save_dir, "correlation_matrix_heatmap.png"))
+plt.savefig(os.path.join(save_dir, "correlation_matrix.png"), dpi=300, bbox_inches='tight')
 plt.tight_layout()
 plt.show()
 
@@ -92,7 +90,7 @@ for ax, feature in zip(axes, numeric_features):
     ax.set_title(f"{feature} vs Price")
     ax.set_ylim(0,)
 plt.tight_layout()
-plt.savefig(os.path.join(save_dir, "scatter_plots.png"))
+plt.savefig(os.path.join(save_dir, "scatter_plots.png"), dpi=300, bbox_inches='tight')
 plt.show()
 
 
@@ -108,7 +106,7 @@ for ax, col in zip(axes, categorical_features):
     ax.set_title(f"Price Distribution by {col}")
     ax.tick_params(axis='x', rotation=45)
 plt.tight_layout()
-plt.savefig(os.path.join(save_dir, "boxplots.png"))
+plt.savefig(os.path.join(save_dir, "boxplots.png"), dpi=300, bbox_inches='tight')
 
 plt.show()
 
@@ -121,8 +119,8 @@ sns.heatmap(grouped, annot=True, fmt=".0f", cmap="RdBu_r", center=grouped.mean()
 plt.title("Average Price by GPU and CPU Core Count")
 plt.ylabel("GPU")
 plt.xlabel("CPU Core Count")
-plt.savefig(os.path.join(save_dir, "grouped_heatmap.png"))
 plt.tight_layout()
+plt.savefig(os.path.join(save_dir, "grouped_heatmap.png"), dpi=300, bbox_inches='tight')
 plt.show()
 
 # === 6. Pearson Correlations with Price ===
@@ -136,3 +134,6 @@ for param in numeric_features + categorical_features:
         coef, p_val = stats.pearsonr(df[param], df['Price'])
     print(f"{param}: Correlation = {coef:.3f}, p-value = {p_val:.3g}")
 
+
+if __name__ == "__main__":
+    main()
